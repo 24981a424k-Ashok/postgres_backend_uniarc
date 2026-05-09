@@ -55,6 +55,7 @@ OPENAI_KEY_2 = os.getenv("OPENAI_KEY_2")
 OPENAI_KEY_3 = os.getenv("OPENAI_KEY_3")
 GROQ_KEY_1 = os.getenv("GROQ_KEY_1")
 GROQ_KEY_2 = os.getenv("GROQ_KEY_2")
+HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 CRICKET_API_KEY = os.getenv("CRICKET_API_KEY")
 
 # Specialized Fallbacks (Maintained for legacy compatibility but effectively mapped to pools)

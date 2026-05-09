@@ -263,14 +263,13 @@ def normalize_article_data(data: dict):
         data["affected"] = f"Policy makers, industry specialized groups, and regional stakeholders monitoring '{article_cat}' developments."
         data["who_is_affected"] = data["affected"]
 
-    # NEW: Ensure image_url is absolute and has backend prefix if relative
+    # NOTE: Do NOT prepend a hardcoded host to relative image URLs.
+    # On Railway the host is different from localhost. Relative paths are served
+    # by the frontend proxy. Only strip truly invalid values.
     image_url = data.get("image_url")
-    if image_url and str(image_url).startswith("/"):
-        # Prepend backend URL
-        data["image_url"] = f"http://127.0.0.1:8000{image_url}"
-    elif image_url and not str(image_url).startswith("http") and not str(image_url).startswith("data:"):
-        # Fallback for other relative paths
-        data["image_url"] = f"http://127.0.0.1:8000/static/{image_url.lstrip('/')}"
+    if image_url and not str(image_url).startswith(("http", "/", "data:")):
+        # It's a bare filename — make it a root-relative path
+        data["image_url"] = f"/static/{image_url.lstrip('/')}"
             
     return data
 
@@ -754,8 +753,10 @@ async def api_bootstrap(
             "ui": get_ui_translations(lang),
         }
         
-        # 4. Update Cache
-        _bootstrap_cache[cache_key] = {"data": result, "timestamp": datetime.now()}
+        # 4. Update Cache — ONLY cache English responses to prevent translated
+        # content from being returned to English users on next request.
+        if not effective_lang or effective_lang.lower() == 'english':
+            _bootstrap_cache[cache_key] = {"data": result, "timestamp": datetime.now()}
         return result
 
     except Exception as e:
@@ -1073,18 +1074,13 @@ async def get_more_stories(category: str, offset: int, country: str = None, lang
     subset = stories[start:end]
     has_more = len(stories) > end
     
-    # Run translation if requested
+    # Run translation if requested (use shared module-level translator, not a new instance)
     if lang and lang.lower() != "english" and subset:
         try:
-            from src.utils.translator import NewsTranslator
-            translator = NewsTranslator()
-            translated_subset = []
-            
-            # Call translation wrapper directly with standard dictionaries
             res = await translator._do_translate(subset, lang)
             subset = res.get("translated_stories", subset)
         except Exception as e:
-            print(f"Error translating more-stories: {str(e)}")
+            logger.warning(f"more-stories translation failed: {e}")
     
     # ---- NORMALIZE ALL STORIES BEFORE RETURNING ----
     for s in subset:

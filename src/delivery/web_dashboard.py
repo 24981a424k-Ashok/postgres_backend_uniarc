@@ -435,8 +435,17 @@ async def api_bootstrap(
     if cache_key in _bootstrap_cache:
         entry = _bootstrap_cache[cache_key]
         if (now - entry["timestamp"]).total_seconds() < 600:
-            logger.info(f"Serving Bootstrap Cache for {cache_key}...")
-            return entry["data"]
+            # Ensure Firebase config is ALWAYS fresh from environment variables
+            cached_data = entry["data"].copy()
+            cached_data["firebase_config"] = {
+                "apiKey": settings.FIREBASE_API_KEY,
+                "authDomain": settings.FIREBASE_AUTH_DOMAIN,
+                "projectId": settings.FIREBASE_PROJECT_ID,
+                "storageBucket": settings.FIREBASE_STORAGE_BUCKET,
+                "messagingSenderId": settings.FIREBASE_MESSAGING_SENDER_ID,
+                "appId": settings.FIREBASE_APP_ID
+            }
+            return cached_data
 
     # Fetch UI Translations early for potential error responses or fallbacks
     ui_labels = get_ui_translations(lang)

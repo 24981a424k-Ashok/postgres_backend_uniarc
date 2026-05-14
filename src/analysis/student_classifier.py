@@ -45,7 +45,9 @@ class StudentClassifier:
         "startup grant", "startup funding", "hackathon", "coding competition",
         "educational", "learning", "academic", "placement drive", "hiring fresher",
         "recruitment drive", "campus hiring", "student achievement", "campus life",
-        "exam update", "university news", "school news", "career guide"
+        "exam update", "university news", "school news", "career guide",
+        "intern", "stipend", "fresher", "placement", "graduation", "degree", "diploma",
+        "research paper", "higher education", "student protest", "tuition fees"
     ]
     
     def _extract_specific_exam(self, text: str) -> str | None:
@@ -71,9 +73,14 @@ class StudentClassifier:
                 
         specific_exam = self._extract_specific_exam(combined_text)
                 
-        # Must have at least one very strong keyword, or an exact exam match
+        # Relaxation: if the category is Education or it hits at least one strict keyword, it's a match
         if strict_matches == 0 and not specific_exam:
-             return None
+             # Check if it's generally about education
+             if "education" in combined_text or "student" in combined_text:
+                 # Allow it but maybe with lower trend score
+                 pass 
+             else:
+                 return None
              
         category = self._assign_category(combined_text)
         tags = self._generate_tags(combined_text, category)

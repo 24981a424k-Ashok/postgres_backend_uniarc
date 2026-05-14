@@ -279,7 +279,8 @@ STUDENT_NEWS_CATEGORIES = [
     "Scholarships & Internships", "Exams & Results", "Policy & Research", 
     "Admissions & Courses", "Campus Life", "Career & Jobs", "Education",
     "Student Opportunities", "Academic Research", "Science & Health", "Tech", "Sports",
-    "Entertainment", "World News", "Business & Economy", "Lifestyle & Wellness"
+    "Entertainment", "World News", "Business & Economy", "Lifestyle & Wellness",
+    "Technology", "Science", "Business", "Startup", "International", "National"
 ]
 STUDENT_KEYWORDS = [
     "student", "exam", "school", "university", "college", "scholarship", "syllabus", 
@@ -289,29 +290,40 @@ STUDENT_KEYWORDS = [
     "tuition", "entrance", "vacancy", "intern", "test", "result", "admit", "coaching", 
     "training", "fresher", "neet", "jee", "upsc", "ssc", "board exam", "admit card",
     "fellowship", "study abroad", "visa", "student loan", "masters", "bachelors", "phd",
-    "placement", "recruiter", "layoff", "salary", "stipend", "cutoff", "eligibility"
+    "placement", "recruiter", "layoff", "salary", "stipend", "cutoff", "eligibility",
+    "iit", "nit", "bits", "aiims", "graduation", "placement drive", "mock test",
+    "skill", "bootcamp", "certification", "cv", "resume", "interview"
 ]
 
 def is_student_article_logic(article):
     """Unified logic to determine if an article should be shown in the student portal."""
-    # Build a larger context for better keyword matching
-    combined = (
-        (article.title or "") + " " + 
-        (article.why_it_matters or "") + " " + 
-        (article.who_is_affected or "") + " " + 
-        (article.category or "")
-    ).lower()
+    if not article: return False
     
-    is_student_cat = article.category in STUDENT_NEWS_CATEGORIES
-    has_keywords = any(kw in combined for kw in STUDENT_KEYWORDS)
-    is_global = article.country == "Global"
+    # Build a larger context for better keyword matching
+    title = (getattr(article, 'title', '') or "").lower()
+    content = (getattr(article, 'content', '') or "").lower()
+    why = (getattr(article, 'why_it_matters', '') or "").lower()
+    cat_val = (getattr(article, 'category', '') or "").lower()
+    
+    combined = f"{title} {content} {why} {cat_val}"
+    
+    # 1. Category check (More robust)
+    is_student_cat = any(sc.lower() in cat_val for sc in STUDENT_NEWS_CATEGORIES)
+    
+    # 2. Keyword check
+    has_keywords = any(kw.lower() in combined for kw in STUDENT_KEYWORDS)
+    
+    # 3. Global priority check
+    is_global = getattr(article, 'country', '') == "Global"
+    
+    # 4. Impact check - if it's Global and highly impactful, students should see it as "General Awareness"
+    is_high_impact_global = is_global and (getattr(article, 'impact_score', 0) or 0) >= 7
     
     # Specific exclusion for pure market/stock news not impacting education
-    if "stock price" in combined or "market capitalization" in combined:
-        if not is_student_cat:
-            return False
+    if ("stock price" in combined or "market capitalization" in combined) and not is_student_cat:
+        return False
             
-    return is_student_cat or has_keywords or is_global
+    return is_student_cat or has_keywords or is_high_impact_global
 
 def log_protocol_action(db: Session, action: str, target_type: str, target_id: str = None, admin_user: str = "Admin", details: str = None):
     """Helper to record administrative actions for protocol history."""
@@ -1266,10 +1278,10 @@ async def generate_mock_exam(db: Session = Depends(get_db)):
         if isinstance(exam_data, dict) and exam_data.get("status") == "error":
              return exam_data
              
-        # Cache for 1 hour
+        # Cache for 24 hours
         _EXAM_CACHE["data"] = exam_data
-        _EXAM_CACHE["expires_at"] = now + 3600 
-        logger.info("Generated new mock exam and cached for 1h.")
+        _EXAM_CACHE["expires_at"] = now + 86400 
+        logger.info("Generated new mock exam and cached for 24h.")
         
         return {"status": "success", "exam": exam_data}
     except Exception as e:
@@ -2107,11 +2119,13 @@ async def _update_student_cache_if_needed(db: Session, force: bool = False, coun
     
     # Process External First (More specific to student portal)
     for art in external_articles:
+        url = art.get("url")
+        if not url or url in seen_urls: continue
         processed_articles.append(art)
-        seen_urls.add(art["url"])
-        category_counts[art["category"]] += 1
+        seen_urls.add(url)
+        category_counts[art.get("category", "All Updates")] += 1
         category_counts["All Updates"] += 1
-        if "Scholarship" in art["category"]: scholarship_count += 1
+        if "Scholarship" in art.get("category", ""): scholarship_count += 1
         
     # Process Internal (Apply classification logic)
     for art in raw_articles:
@@ -2121,7 +2135,7 @@ async def _update_student_cache_if_needed(db: Session, force: bool = False, coun
         if art_url in seen_urls: continue
         seen_urls.add(art_url)
         
-        is_student_cat = art.category in STUDENT_NEWS_CATEGORIES
+        is_student_cat = any(sc.lower() in (art.category or "").lower() for sc in STUDENT_NEWS_CATEGORIES)
         cat = art.category if is_student_cat else "All Updates"
         
         # Use existing normalization for consistency

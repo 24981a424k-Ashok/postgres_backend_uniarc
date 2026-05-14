@@ -90,9 +90,9 @@ class ExamGenerator:
         {news_text}
         
         RULES:
-        1. Generate exactly 3 questions.
+        1. Generate exactly 15 questions.
         2. Format: 
-           - 3 MCQs (4 options)
+           - 15 MCQs (4 options)
         3. Sections: Mix of National, International, Economy, Science, or Sports.
         4. Output JSON format ONLY:
         {{
@@ -134,7 +134,7 @@ class ExamGenerator:
                         all_questions = json.load(f)
                     
                     # Randomly select up to 3 questions
-                    count = min(len(all_questions), 3)
+                    count = min(len(all_questions), 15)
                     selected_questions = random.sample(all_questions, count)
                     
                     # Re-index ids
@@ -184,6 +184,6 @@ class ExamGenerator:
                 return {
                     "status": "success",
                     "title": f"Daily Mock Test (Smart Fallback) - {datetime.now().strftime('%d %b %Y')}",
-                    "questions": random.sample(fallback_questions, 3)
+                    "questions": random.sample(fallback_questions, 15)
                 }
 

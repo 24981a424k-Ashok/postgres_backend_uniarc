@@ -269,8 +269,11 @@ def normalize_article_data(data: dict, strip_large_fields: bool = False):
 
     # NOTE: Do NOT prepend a hardcoded host to relative image URLs.
     # On Railway the host is different from localhost. Relative paths are served
-    # by the frontend proxy. Fallback image is already applied above if image_url was None/empty.
-
+    # by the frontend proxy. Only convert bare filenames to root-relative /static/ paths.
+    image_url = data.get("image_url")
+    if image_url and not str(image_url).startswith("http") and not str(image_url).startswith("/"):
+        # It's a bare filename (e.g. "photo.jpg") — make it a root-relative path
+        data["image_url"] = f"/static/{image_url.lstrip('/')}"
 
     # 4. Strip large fields if requested to save bandwidth (Egress Optimization)
     if strip_large_fields:

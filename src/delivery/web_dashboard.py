@@ -266,12 +266,12 @@ def normalize_article_data(data: dict, strip_large_fields: bool = False):
         data["affected"] = f"Policy makers, industry specialized groups, and regional stakeholders monitoring '{article_cat}' developments."
         data["who_is_affected"] = data["affected"]
 
+
     # NOTE: Do NOT prepend a hardcoded host to relative image URLs.
     # On Railway the host is different from localhost. Relative paths are served
-    # by the frontend proxy. Only strip truly invalid values.
-        # It's a bare filename — make it a root-relative path
-        data["image_url"] = f"/static/{image_url.lstrip('/')}"
-    
+    # by the frontend proxy. Fallback image is already applied above if image_url was None/empty.
+
+
     # 4. Strip large fields if requested to save bandwidth (Egress Optimization)
     if strip_large_fields:
         data.pop("content", None)
@@ -946,6 +946,9 @@ async def get_article_detail(article_id: str, lang: str = "english", url: str = 
 
     # ---- DEFINITIVE NORMALIZATION ----
     data = normalize_article_data(data)
+
+    # 4. Save to Cache
+    _article_detail_cache[cache_key] = {"data": {"status": "success", "article": data}, "timestamp": datetime.now()}
 
     return {"status": "success", "article": data}
 

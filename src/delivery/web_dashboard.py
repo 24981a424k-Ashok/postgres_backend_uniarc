@@ -805,10 +805,10 @@ async def api_bootstrap(
             "ui": get_ui_translations(lang),
         }
         
-        # 4. Update Cache — ONLY cache English responses to prevent translated
-        # content from being returned to English users on next request.
-        if not effective_lang or effective_lang.lower() == 'english':
-            _bootstrap_cache[cache_key] = {"data": result, "timestamp": datetime.now()}
+        # 4. Update Cache — Cache ALL responses (including regional) to avoid 
+        # repeated translation bottlenecks. The cache_key includes 'lang' 
+        # so it's safe and isolated.
+        _bootstrap_cache[cache_key] = {"data": result, "timestamp": datetime.now()}
         return result
 
     except Exception as e:

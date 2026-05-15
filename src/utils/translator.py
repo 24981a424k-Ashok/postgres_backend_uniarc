@@ -431,17 +431,22 @@ class NewsTranslator:
                         if not key: break
                         client, provider = self._get_client_by_key(key)
                 
-                # BATCH FAILBACK: Single item NLLB
-                results = []
-                for item in batch_items:
-                    results.append({
-                        "id": item.get("id"),
-                        "t": await self.translate_text(item.get("title"), target_lang),
-                        "b": [await self.translate_text(b, target_lang) for b in item.get("bullets", [])],
-                        "w": await self.translate_text(item.get("why"), target_lang),
-                        "a": await self.translate_text(item.get("affected"), target_lang)
-                    })
-                return results
+                # BATCH FAILBACK: Parallel single-item translation fallback
+                async def translate_item_safe(item):
+                    try:
+                        # Parallelize field translations for the single item
+                        t_task = self.translate_text(item.get("title"), target_lang)
+                        b_tasks = [self.translate_text(b, target_lang) for b in item.get("bullets", [])]
+                        w_task = self.translate_text(item.get("why"), target_lang)
+                        a_task = self.translate_text(item.get("affected"), target_lang)
+                        
+                        t, b, w, a = await asyncio.gather(t_task, asyncio.gather(*b_tasks), w_task, a_task)
+                        return {"id": item.get("id"), "t": t, "b": b, "w": w, "a": a}
+                    except Exception as e:
+                        logger.error(f"Single item fallback failed: {e}")
+                        return {"id": item.get("id"), "t": item.get("title"), "b": item.get("bullets", []), "w": item.get("why"), "a": item.get("affected")}
+
+                return await asyncio.gather(*[translate_item_safe(item) for item in batch_items])
 
             batch_results = await asyncio.gather(*[translate_batch(b, i) for i, b in enumerate(batches)])
             all_translated = [tr for res in batch_results for tr in res]

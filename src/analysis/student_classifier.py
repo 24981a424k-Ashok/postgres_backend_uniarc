@@ -9,16 +9,11 @@ class StudentClassifier:
     """
     
     CATEGORIES = {
-        "Education Policy & Govt Updates": ["education policy", "syllabus", "ugc", "cbse", "aicte", "nep 2020", "ministry of education", "school board", "educational reform", "government school", "higher education"],
-        "Exams & Results": ["exam date", "results declared", "scorecard", "admit card", "nta", "jee main", "neet ug", "upsc prelims", "cut-off marks", "answer key", "date sheet", "counseling", "mock test", "merit list", "board exams", "entrance exam", "examination", "test result", "passing marks"],
         "Scholarships & Internships": ["scholarship", "internship", "fellowship", "stipend", "student grant", "student funding", "financial assistance for students", "startup grant", "startup funding", "training program", "summer internship"],
-        "Career & Placement News": ["campus placement", "fresher hiring", "graduate recruitment", "university placement", "off-campus drive", "fresher vacancy", "job for students", "career fair", "recruitment drive", "employment news"],
-        "Study Abroad Updates": ["student visa", "study abroad", "ielts", "toefl", "gre", "international student", "foreign university", "overseas education", "visa news", "emigration for study"],
-        "AI & Tech for Students": ["student hackathon", "coding competition", "aicte internship", "student bootcamp", "student certification", "campus ambassador", "hackathon", "robotics", "tech fest", "coding challenge"],
-        "Education": ["education", "teaching", "schooling", "learning", "classroom", "teacher strike", "pedagogy", "literacy"],
-        "Campus Life": ["campus news", "university life", "student union", "college event", "hostel", "campus infrastructure", "student protest"],
-        "Admissions & Courses": ["admission open", "apply now", "enrollment", "course curriculum", "degree program", "admission-notice"],
-        "Academic Research": ["research paper", "journal", "phd thesis", "scientific discovery", "academic conference", "academic study"]
+        "Exams & Results": ["exam date", "results declared", "scorecard", "admit card", "nta", "jee main", "neet ug", "upsc prelims", "cut-off marks", "answer key", "date sheet", "counseling", "mock test", "merit list", "board exams", "entrance exam", "examination", "test result", "passing marks", "results out"],
+        "Admissions & Courses": ["admission open", "apply now", "enrollment", "course curriculum", "degree program", "admission-notice", "university admission", "college admission", "enroll now", "last date to apply"],
+        "Career & Jobs": ["campus placement", "fresher hiring", "graduate recruitment", "university placement", "off-campus drive", "fresher vacancy", "job for students", "career fair", "recruitment drive", "employment news", "hiring", "job alert"],
+        "Education & Policy": ["education policy", "syllabus", "ugc", "cbse", "aicte", "nep 2020", "ministry of education", "school board", "educational reform", "government school", "higher education", "campus life", "university news", "school news", "student union", "academic research", "research paper", "phd thesis"]
     }
 
     PROFILES = {

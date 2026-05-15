@@ -130,11 +130,6 @@ UI_TRANSLATIONS = {
         'listen_audi': 'Listen',
         'stop_audi': 'Stop',
         'playing': 'Playing...',
-        'for_students': 'For Students',
-        'personal_ai_news': 'Personal AI News',
-        'crystal_ball': 'Crystal Ball',
-        'choose_preferred_language': 'Choose your preferred language for the Universal News Intelligence feed.',
-        'skip_continue_english': 'Skip — Continue in English',
         "student_portal_title": "Student Intelligence Hub",
         "student_portal_subtitle": "Real-time tracking of exams, policies, scholarships, and opportunities parsed directly from the news without delay.",
         "active_opportunities": "Active Opportunities",
@@ -147,7 +142,19 @@ UI_TRANSLATIONS = {
         "apply_now": "Apply Now →",
         "search_country": "Search Country",
         "all_updates": "All Updates",
-        "region_country": "Region / Country"
+        "region_country": "Region / Country",
+        "choose_preferred_language": "Choose your preferred language for the Universal News Intelligence feed.",
+        "skip_continue_english": "Skip — Continue in English",
+        "student_section": {
+            "title": "Student Intelligence",
+            "subtitle": "Scholarships, exams, admissions, and career updates",
+            "all_updates": "All Updates",
+            "scholarships": "Scholarships & Internships",
+            "exams": "Exams & Results",
+            "admissions": "Admissions & Courses",
+            "career": "Career & Jobs",
+            "policy": "Education & Policy"
+        }
     },
     "telugu": {
         "verified": "ధృవీకరించబడింది:",
@@ -186,7 +193,7 @@ UI_TRANSLATIONS = {
         "ai_generated": "AI-సృష్టించిన సారాంశాలు. ఒరిజినల్ సోర్స్‌లతో ధృవీకరించుకోండి.",
         "all_rights": "సర్వ హక్కులూ ప్రత్యేకించబడినవి.",
         "markets": "మార్కెట్లు",
-        "live_report": "లైవ్ రిపోర్ట్",
+        "live_report": "లైవ్ రిపోర్্ট",
         "confirmed": "నిర్ధారించబడింది",
         "breaking_feed": "బ్రేకింగ్ ఫీడ్",
         "global_intel_node": "గ్లోబల్ నోడ్",
@@ -226,7 +233,7 @@ UI_TRANSLATIONS = {
         "universe_hero_desc": "ప్రపంచంలోని ప్రధాన నోడ్ల నుండి నిజ-సమయ వార్తల విశ్లేషణను పొందండి.",
         "scan_node": "నోడ్ స్కాన్ చేయండి",
         "video_reports": "వీడియో నివేదికలు",
-        "strategic_intel": "వ్యూహాత్మక సమాచారం",
+        "strategic_intel": "ವ್ಯೂಹಾತ್ಮಕ సమాచారం",
         "daily_intel_briefing": "రోజువారీ ఇంటెల్ బ్రీఫింగ్",
         "details": "వివరాలు",
         "close": "ముగించు X",
@@ -293,7 +300,17 @@ UI_TRANSLATIONS = {
         "apply_now": "ఇప్పుడే దరఖాస్తు చేసుకోండి →",
         "search_country": "దేశాన్ని వెతకండి",
         "all_updates": "అన్ని అప్‌డేట్‌లు",
-        "region_country": "ప్రాంతం / దేశం"
+        "region_country": "ప్రాంతం / దేశం",
+        "student_section": {
+            "title": "స్టూడెంట్ ఇంటెలిజెన్స్",
+            "subtitle": "స్కాలర్‌షిప్‌లు, పరీక్షలు, ప్రవేశాలు మరియు కెరీర్ అప్‌డేట్‌లు",
+            "all_updates": "అన్ని అప్‌డేట్‌లు",
+            "scholarships": "స్కాలర్‌షిప్‌లు & ఇంటర్న్‌షిప్‌లు",
+            "exams": "పరీక్షలు & ఫలితాలు",
+            "admissions": "అడ్మిషన్లు & కోర్సులు",
+            "career": "కెరీర్ & ఉద్యోగాలు",
+            "policy": "విద్య & విధానం"
+        }
     },
     "hindi": {
         "verified": "सत्यापित:",
@@ -358,12 +375,6 @@ UI_TRANSLATIONS = {
         "crystal_ball": "क्रिस्टल बॉल",
         "home": "होम",
         "category": "श्रेणी",
-        "nodes": "ग्लोबल नोड्स",
-        "saved": "सेव किए गए",
-        "universe": "ब्रह्मांड",
-        "test": "मॉक टेस्ट",
-        "history_nav": "इतिहास",
-        "news_nav": "समाचार पत्र",
         "search_lang": "भाषा खोजें...",
         "indian_langs": "भारतीय भाषाएं",
         "global_langs": "वैश्विक भाषाएं",
@@ -430,7 +441,17 @@ UI_TRANSLATIONS = {
         "apply_now": "अभी आवेदन करें →",
         "search_country": "देश खोजें",
         "all_updates": "सभी अपडेट",
-        "region_country": "क्षेत्र / देश"
+        "region_country": "क्षेत्र / देश",
+        "student_section": {
+            "title": "छात्र इंटेलिजेंस",
+            "subtitle": "छात्रवृत्ति, परीक्षा, प्रवेश और करियर अपडेट",
+            "all_updates": "सभी अपडेट",
+            "scholarships": "छात्रवृत्ति और इंटर्नशिप",
+            "exams": "परीक्षा और परिणाम",
+            "admissions": "प्रवेश और पाठ्यक्रम",
+            "career": "करियर और नौकरियां",
+            "policy": "शिक्षा और नीति"
+        }
     },
     "spanish": {
         "verified": "VERIFICADO:",
@@ -493,70 +514,252 @@ UI_TRANSLATIONS = {
         "personal_ai_news": "Noticias de IA Personal",
         "crystal_ball": "Bola de Cristal",
         "choose_preferred_language": "Elija su idioma preferido para las noticias.",
-        "skip_continue_english": "Omitir — Continuar en Inglés"
+        "student_section": {
+            "title": "Inteligencia Estudiantil",
+            "subtitle": "Becas, exámenes, admisiones y actualizaciones de carrera",
+            "all_updates": "Todas las actualizaciones",
+            "scholarships": "Becas y pasantías",
+            "exams": "Exámenes y resultados",
+            "admissions": "Admisiones y cursos",
+            "career": "Carrera y empleos",
+            "policy": "Educación y política"
+        }
+    },
+    "punjabi": {
+        "verified": "ਤਸਦੀਕ ਕੀਤੀ:",
+        "global": "[ਗਲੋਬਲ]",
+        "who_affected": "👥 ਕੌਣ ਪ੍ਰਭਾਵਿਤ ਹੈ",
+        "why_matters": "⚡ ਇਹ ਕਿਉਂ ਮਹੱਤਵਪੂਰਨ ਹੈ",
+        "key_points": "ਮੁੱਖ ਨੁਕਤੇ",
+        "why_it_matters": "ਇਹ ਕਿਉਂ ਮਹੱਤਵਪੂਰਨ ਹੈ",
+        "impact_analysis": "ਪ੍ਰਭਾਵ ਵਿਸ਼ਲੇਸ਼ਣ",
+        "ai_analysis": "AI ਵਿਸ਼ਲੇਸ਼ਣ",
+        "just_now": "ਹੁਣੇ",
+        "brief_title": "⭐ 60-ਸਕਿੰਟ ਦਾ ਸਾਰ",
+        "see_more": "ਹੋਰ ਦੇਖੋ",
+        "see_more_briefs": "ਹੋਰ ਸਾਰ ਦੇਖੋ",
+        "top_headlines": "ਮੁੱਖ ਖ਼ਬਰਾਂ",
+        "breaking_news": "ਬ੍ਰੇਕਿੰਗ ਨਿਊਜ਼",
+        "live_updates": "ਲਾਈਵ ਅੱਪਡੇਟ",
+        "system_init": "ਸਿਸਟਮ ਸ਼ੁਰੂ ਹੋ ਰਿਹਾ ਹੈ...",
+        "gathering_intel": "ਜਾਣਕਾਰੀ ਇਕੱਠੀ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+        "status": "ਸਥਿਤੀ:",
+        "syncing": "ਸਿੰਕ ਹੋ ਰਿਹਾ ਹੈ...",
+        "main_dashboard": "ਮੁੱਖ ਡੈਸ਼ਬੋਰਡ",
+        "universal_news": "ਯੂਨੀਵਰਸਲ ਨਿਊਜ਼",
+        "update_cycle": "⚡ 15-ਮਿੰਟ ਦਾ ਅੱਪਡੇਟ",
+        "for_students": "ਵਿਦਿਆਰਥੀਆਂ ਲਈ",
+        "personal_ai_news": "ਨਿੱਜੀ AI ਖ਼ਬਰਾਂ",
+        "student_portal_title": "ਵਿਦਿਆਰਥੀ ਜਾਣਕਾਰੀ ਕੇਂਦਰ",
+        "scholarships_internships": "ਸਕਾਲਰਸ਼ਿਪ ਅਤੇ ਇੰਟਰਨਸ਼ਿਪ",
+        "exams_results": "ਪ੍ਰੀਖਿਆਵਾਂ ਅਤੇ ਨਤੀਜੇ",
+        "apply_now": "ਹੁਣੇ ਅਪਲਾਈ ਕਰੋ →",
+        "student_section": {
+            "title": "ਵਿਦਿਆਰਥੀ ਜਾਣਕਾਰੀ",
+            "subtitle": "ਸਕਾਲਰਸ਼ਿਪ, ਪ੍ਰੀਖਿਆਵਾਂ, ਦਾਖਲੇ ਅਤੇ ਕਰੀਅਰ ਅੱਪਡੇਟ",
+            "all_updates": "ਸਾਰੇ ਅੱਪਡੇਟ",
+            "scholarships": "ਸਕਾਲਰਸ਼ਿਪ ਅਤੇ ਇੰਟਰਨਸ਼ਿਪ",
+            "exams": "ਪ੍ਰੀਖਿਆਵਾਂ ਅਤੇ ਨਤੀਜੇ",
+            "admissions": "दाखले ਅਤੇ ਕੋਰਸ",
+            "career": "ਕਰੀਅਰ ਅਤੇ ਨੌਕਰੀਆਂ",
+            "policy": "ਸਿੱਖਿਆ ਅਤੇ ਨੀਤੀ"
+        }
+    },
+    "marathi": {
+        "verified": "सत्यापित:",
+        "global": "[जागतिक]",
+        "who_affected": "👥 कोणावर परिणाम होतो",
+        "why_matters": "⚡ हे का महत्त्वाचे आहे",
+        "key_points": "ठळक मुद्दे",
+        "why_it_matters": "हे महत्त्वाचे का आहे",
+        "impact_analysis": "प्रभाव विश्लेषण",
+        "ai_analysis": "AI विश्लेषण",
+        "just_now": "आत्ता",
+        "brief_title": "⭐ ६०-सेकंद सारांश",
+        "see_more": "आणखी पहा",
+        "top_headlines": "प्रमुख बातम्या",
+        "breaking_news": "ब्रेकिंग न्यूज",
+        "live_updates": "लाईव्ह अपडेट्स",
+        "system_init": "सिस्टम सुरू होत आहे...",
+        "status": "स्थिती:",
+        "syncing": "सिंक होत आहे...",
+        "universal_news": "युनिव्हर्सल न्यूज",
+        "for_students": "विद्यार्थ्यांसाठी",
+        "save_for_later": "🔖 नंतरसाठी जतन करा",
+        "student_portal_title": "विद्यार्थी माहिती केंद्र",
+        "scholarships_internships": "शिष्यवृत्ती आणि इंटर्नशिप",
+        "exams_results": "परीक्षा आणि निकाल",
+        "apply_now": "आता अर्ज करा →",
+        "student_section": {
+            "title": "विद्यार्थी इंटेलिजेंस",
+            "subtitle": "शिष्यवृत्ती, परीक्षा, प्रवेश आणि करिअर अपडेट्स",
+            "all_updates": "सर्व अपडेट्स",
+            "scholarships": "शिष्यवृत्ती आणि इंटर्नशिप",
+            "exams": "परीक्षा आणि निकाल",
+            "admissions": "प्रवेश आणि अभ्यासक्रम",
+            "career": "करिअर आणि नोकऱ्या",
+            "policy": "शिक्षण आणि धोरण"
+        }
+    },
+    "bengali": {
+        "verified": "যাচাইকৃত:",
+        "global": "[বৈশ্বিক]",
+        "who_affected": "👥 কারা প্রভাবিত",
+        "why_matters": "⚡ কেন এটি গুরুত্বপূর্ণ",
+        "key_points": "মূল পয়েন্ট",
+        "why_it_matters": "কেন এটি গুরুত্বপূর্ণ",
+        "impact_analysis": "প্রভাব বিশ্লেষণ",
+        "ai_analysis": "AI বিশ্লেষণ",
+        "just_now": "এইমাত্র",
+        "brief_title": "⭐ ৬০-সেকেন্ডের সংক্ষিপ্তসার",
+        "see_more": "আরও দেখুন",
+        "top_headlines": "শীর্ষ সংবাদ",
+        "breaking_news": "ব্রেকিং নিউজ",
+        "live_updates": "লাইভ আপডেট",
+        "system_init": "সিস্টেম শুরু হচ্ছে...",
+        "status": "অবস্থা:",
+        "syncing": "সিঙ্ক হচ্ছে...",
+        "universal_news": "ইউনিভার্সাল নিউজ",
+        "for_students": "শিক্ষার্থীদের জন্য",
+        "student_portal_title": "ছাত্র তথ্য কেন্দ্র",
+        "scholarships_internships": "বৃত্তি এবং ইন্টার্নশিপ",
+        "exams_results": "পরীক্ষা এবং ফলাফল",
+        "apply_now": "এখনই আবেদন করুন →",
+        "student_section": {
+            "title": "ছাত্র ইন্টেলিজেন্স",
+            "subtitle": "বৃত্তি, পরীক্ষা, ভর্তি এবং ক্যারিয়ার আপডেট",
+            "all_updates": "সমস্ত আপডেট",
+            "scholarships": "বৃত্তি এবং ইন্টার্নশিপ",
+            "exams": "পরীক্ষা এবং ফলাফল",
+            "admissions": "ভর্তি এবং কোর্স",
+            "career": "ক্যারিয়ার এবং চাকরি",
+            "policy": "শিক্ষা এবং নীতি"
+        }
+    },
+    "tamil": {
+        "verified": "சரிபார்க்கப்பட்டது:",
+        "global": "[உலகளாவிய]",
+        "who_affected": "👥 யார் பாதிக்கப்படுகிறார்கள்",
+        "why_matters": "⚡ இது ஏன் முக்கியமானது",
+        "key_points": "முக்கிய குறிப்புகள்",
+        "why_it_matters": "ஏன் இது முக்கியமானது",
+        "impact_analysis": "தாக்க பகுப்பாய்வு",
+        "ai_analysis": "AI பகுப்பாய்வு",
+        "just_now": "இப்போது",
+        "brief_title": "⭐ 60-வினாடி சுருக்கம்",
+        "see_more": "மேலும் காண்க",
+        "top_headlines": "தலைப்புச் செய்திகள்",
+        "breaking_news": "முக்கிய செய்திகள்",
+        "live_updates": "நேரಡಿ அறிவிப்புகள்",
+        "system_init": "கணினி தொடங்குகிறது...",
+        "status": "நிலை:",
+        "syncing": "ஒத்திசைக்கப்படுகிறது...",
+        "universal_news": "யுனிவர்சல் நியூஸ்",
+        "for_students": "மாணவர்களுக்காக",
+        "student_portal_title": "மாணவர் தகவல் மையம்",
+        "scholarships_internships": "உதவித்தொகை மற்றும் இன்டர்ன்ஷிப்",
+        "exams_results": "தேர்வுகள் மற்றும் முடிவுகள்",
+        "apply_now": "இப்பொழுதே விண்ணப்பிக்கவும் →",
+        "student_section": {
+            "title": "மாணவர் இன்டெலிஜென்ஸ்",
+            "subtitle": "உதவித்தொகை, தேர்வுகள், சேர்க்கை மற்றும் தொழில் குறித்த அறிவிப்புகள்",
+            "all_updates": "அனைத்து அறிவிப்புகளும்",
+            "scholarships": "உதவித்தொகை & இன்டர்ன்ஷிப்",
+            "exams": "தேர்வுகள் & முடிவுகள்",
+            "admissions": "சேர்க்கை & படிப்புகள்",
+            "career": "தொழில் & வேலைகள்",
+            "policy": "கல்வி & கொள்கை"
+        }
+    },
+    "kannada": {
+        "verified": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ:",
+        "global": "[ಜಾಗತಿಕ]",
+        "who_affected": "👥 ಯಾರು ಬಾಧಿತರಾಗಿದ್ದಾರೆ",
+        "why_matters": "⚡ ಇದು ಏಕೆ ಮುಖ್ಯ",
+        "key_points": "ಮುಖ್ಯಾಂಶಗಳು",
+        "why_it_matters": "ಇದು ಏಕೆ ಮುಖ್ಯ",
+        "impact_analysis": "ಪರಿಣಾಮ ವಿಶ್ಲೇಷಣೆ",
+        "ai_analysis": "AI ವಿಶ್ಲೇಷಣೆ",
+        "just_now": "ಈಗಷ್ಟೇ",
+        "brief_title": "⭐ 60-ಸೆಕೆಂಡ್ ಸಾರಾಂಶ",
+        "see_more": "ಇನ್ನಷ್ಟು ನೋಡಿ",
+        "top_headlines": "ಮುಖ್ಯಾಂಶಗಳು",
+        "breaking_news": "ಬ್ರೇಕಿಂಗ್ ನ್ಯೂಸ್",
+        "live_updates": "ಲೈವ್ ನವೀಕರಣಗಳು",
+        "system_init": "ಸಿಸ್ಟಮ್ ಪ್ರಾರಂಭವಾಗುತ್ತಿದೆ...",
+        "status": "ಸ್ಥಿತಿ:",
+        "syncing": "ಸಿಂಕ್ ಆಗುತ್ತಿದೆ...",
+        "universal_news": "ಯೂನಿವರ್ಸಲ್ ನ್ಯೂಸ್",
+        "for_students": "ವಿದ್ಯಾರ್ಥಿಗಳಿಗಾಗಿ",
+        "student_portal_title": "ವಿದ್ಯಾರ್ಥಿ ಮಾಹಿತಿ ಕೇಂದ್ರ",
+        "scholarships_internships": "ಶಿಷ್ಯವೇತನ ಮತ್ತು ಇಂಟರ್ನ್ಶಿಪ್",
+        "exams_results": "ಪರೀಕ್ಷೆಗಳು ಮತ್ತು ಫಲಿತಾಂಶಗಳು",
+        "apply_now": "ಈಗಲೇ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ →",
+        "student_section": {
+            "title": "ವಿದ್ಯಾರ್ಥಿ ಇಂಟೆಲಿಜೆನ್ಸ್",
+            "subtitle": "ಶಿಷ್ಯವೇತನಗಳು, ಪರೀಕ್ಷೆಗಳು, ಪ್ರವೇಶಗಳು మరియు వృత్తిజీవನದ అప్‌డేట్‌లు",
+            "all_updates": "ಎಲ್ಲಾ అప్‌డేట్‌లు",
+            "scholarships": "ಶಿಷ್ಯವೇತನಗಳು & ಇಂಟర్ನ್‌ಶಿಪ್‌లు",
+            "exams": "ಪರೀಕ್ಷೆಗಳು & ಫಲಿತಾಂಶಗಳು",
+            "admissions": "ಪ್ರವೇಶಗಳು & ಕೋರ್ಸ್‌ಗಳು",
+            "career": "ವೃತ್ತಿజీವನ & ಉದ್ಯೋಗಗಳು",
+            "policy": "ಶಿಕ್ಷಣ & ನೀತಿ"
+        }
+    },
+    "malayalam": {
+        "verified": "സ്ഥിരീകരിച്ചു:",
+        "global": "[ആഗോള]",
+        "who_affected": "👥 ആരെ ബാധിക്കുന്നു",
+        "why_matters": "⚡ എന്തുകൊണ്ട് ഇത് പ്രധാനമാണ്",
+        "key_points": "പ്രധാന പോയിന്റുകൾ",
+        "why_it_matters": "എന്തുകൊണ്ട് ഇത് പ്രധാനമാണ്",
+        "impact_analysis": "പ്രത്യാഘാത വിശകലനം",
+        "ai_analysis": "AI വിശകലനം",
+        "just_now": "ഇപ്പോൾ",
+        "brief_title": "⭐ 60-സെക്കൻഡ് സംഗ്രഹം",
+        "see_more": "കൂടുതൽ കാണുക",
+        "top_headlines": "പ്രധാന വാർത്തകൾ",
+        "breaking_news": "ബ്രേക്കിംഗ് വാർത്തകൾ",
+        "live_updates": "തത്സമയ അപ്‌ഡേറ്റുകൾ",
+        "system_init": "സിസ്റ്റം ആരംഭിക്കുന്നു...",
+        "status": "നില:",
+        "syncing": "സിങ്ക് ചെയ്യുന്നു...",
+        "universal_news": "യൂണിവേഴ്സൽ ന്യൂസ്",
+        "for_students": "വിദ്യാർത്ഥികൾക്കായി",
+        "student_portal_title": "വിദ്യാർത്ഥി വിവര കേന്ദ്രം",
+        "scholarships_internships": "സ്കോളർഷിപ്പും ഇന്റേൺഷിപ്പും",
+        "exams_results": "പരീക്ഷകളും ഫലങ്ങളും",
+        "apply_now": "ഇപ്പോൾ അപേക്ഷിക്കുക →",
+        "student_section": {
+            "title": "സ്റ്റുഡന്റ് ഇന്റലിജൻസ്",
+            "subtitle": "സ്കോളർഷിപ്പുകൾ, പരീക്ഷകൾ, പ്രവേശനം, കരിയർ അപ്ഡേറ്റുകൾ",
+            "all_updates": "എല്ലാ അപ്ഡേറ്റുകളും",
+            "scholarships": "സ്കോളർഷിപ്പുകൾ & ഇന്റേൺഷിപ്പുകൾ",
+            "exams": "പരീക്ഷകൾ & ഫലങ്ങൾ",
+            "admissions": "പ്രവേശനം & കോഴ്സുകൾ",
+            "career": "കരിയർ & ജോലികൾ",
+            "policy": "വിദ്യാഭ്യാസം & നയം"
+        }
     },
     "arabic": {
-        "verified": "تم التحقق منه:",
-        "global": "[عالمي]",
-        "who_affected": "👥 من المتأثر؟",
-        "why_matters": "⚡ لماذا هذا مهم؟",
-        "ai_analysis": "تحليل الذكاء الاصطناعي",
-        "just_now": "الآن",
-        "brief_title": "⭐ موجز بـ 60 ثانية",
-        "see_more": "رؤية المزيد",
-        "see_more_briefs": "رؤية المزيد من الموجز",
-        "top_headlines": "أهم العناوين",
-        "breaking_news": "أخبار عاجلة",
-        "live_updates": "تحديثات مباشرة",
-        "system_init": "جارٍ تهيئة النظام...",
-        "gathering_intel": "تجميع البيانات...",
-        "global_system_init": "⚙️ المزامنة العالمية مستمرة",
-        "status": "الحالة:",
-        "syncing": "مزامنة...",
-        "ai_engine_sync": "الذكاء الاصطناعي يزامن الآن. يرجى الانتظار...",
-        "node_backup_active": "📡 مزامنة احتياطية تعمل",
-        "regional_gathering": "جاري جمع الأخبار الإقليمية. الاستعانة بالعالمية حاليا.",
-        "try_sync_node": "إعادة المزامنة",
-        "main_dashboard": "اللوحة الرئيسية",
-        "trending_feed": "الأخبار الشائعة",
-        "viral": "شائع جداً",
-        "no_trending": "لا توجد أخبار حاليا.",
-        "todays_newspapers": "صحف اليوم",
-        "regional_publications": "الصحف المحلية",
-        "universal_news": "يونيفرسال نيوز",
-        "update_cycle": "⚡ تحديث دوري (15 دقيقة)",
-        "last_updated": "آخر تحديث:",
-        "ai_generated": "تم توليد هذا الملخص آليا، يرجى التثبت من المصدر الأصلي.",
-        "all_rights": "كل الحقوق محفوظة.",
-        "markets": "الاسواق",
-        "live_report": "تغطية مباشرة",
-        "confirmed": "مؤكد",
-        "breaking_feed": "موجز الأخبار",
-        "global_intel_node": "النود الدولي",
-        "regional_intel_feed": "إشارات النود الإقليمي:",
-        "curated_intel": "مختارات:",
-        "categories": "التصنيفات",
-        "global_nodes": "النودز الدولية",
-        "saved_items": "المحفوظات",
-        "mock_test": "اختبار تجريبي",
-        "history": "التاريخ",
-        "analyst_reports": "تقارير محللين",
-        "intelligence_report": "تقرير الذكاء الاصطناعي",
-        "verified_source": "مصدر موثوق",
-        "neutral": "محايد",
-        "exec_summary": "📌 الملخص التنفيذي",
-        "analyzing_demo": "تحليل التأثير الديمغرافي...",
-        "evaluating_strat": "تقييم الأهمية...",
-        "intel_tags": "أوسمة",
-        "save_for_later": "🔖 حفظ لاحقا",
-        "visit_source": "🌐 زيارة المصدر الأصلي",
+        "visit_source": "🌐 المصدر الأصلي",
         "intel_node": "نود",
         "intelligence": "استخبارات",
         "for_students": "للطلاب",
         "personal_ai_news": "أخبار الذكاء الاصطناعي الشخصية",
         "crystal_ball": "الكرة الكريستالية",
         "choose_preferred_language": "اختر لغتك المفضلة لموجز الأخبار.",
-        "skip_continue_english": "تخطي - تابع بالإنجليزية"
+        "skip_continue_english": "تخطي - تابع بالإنجليزية",
+        "student_section": {
+            "title": "ذكاء الطلاب",
+            "subtitle": "المنح الدراسية والامتحانات والقبول وتحديثات الحياة المهنية",
+            "all_updates": "كل التحديثات",
+            "scholarships": "المنح الدراسية والتدريب",
+            "exams": "الامتحانات والنتائج",
+            "admissions": "القبول والدورات",
+            "career": "الوظائف والمهن",
+            "policy": "التعليم والسياسة"
+        }
     },
     "japanese": {
         "verified": "確認済み:",
@@ -619,7 +822,17 @@ UI_TRANSLATIONS = {
         "personal_ai_news": "パーソナルAIニュース",
         "crystal_ball": "クリスタルボール",
         "choose_preferred_language": "ニュースフィードの希望の言語を選択してください。",
-        "skip_continue_english": "スキップ — 英語で続行"
+        "skip_continue_english": "スキップ — 英語で続行",
+        "student_section": {
+            "title": "学生インテリジェンス",
+            "subtitle": "奨学金、試験、入学、キャリアの最新情報",
+            "all_updates": "すべての更新",
+            "scholarships": "奨学金とインターンシップ",
+            "exams": "試験と結果",
+            "admissions": "入学とコース",
+            "career": "キャリアと仕事",
+            "policy": "教育と政策"
+        }
     },
     "french": {
         "verified": "VÉRIFIÉ:",
@@ -639,7 +852,7 @@ UI_TRANSLATIONS = {
         "global_system_init": "⚙️ Initialisation du système global",
         "status": "Statut :",
         "syncing": "Synchronisation...",
-        "ai_engine_sync": "L'IA se synchronise avec les sources. Cela prendra 5-10 minutes.",
+        "ai_engine_sync": "L'IA se synchronise with les sources. Cela prendra 5-10 minutes.",
         "node_backup_active": "📡 Sauvegarde des données active",
         "regional_gathering": "Bascule temporaire vers l'information globale.",
         "try_sync_node": "Réessayer",
@@ -661,7 +874,7 @@ UI_TRANSLATIONS = {
         "global_intel_node": "Information Globale",
         "regional_intel_feed": "Information régionale pour:",
         "curated_intel": "Information validée:",
-        "categories": "Catégories",
+        "categories": "Categoríes",
         "global_nodes": "Nœuds",
         "saved_items": "Sauvegardés",
         "mock_test": "Test",
@@ -682,104 +895,32 @@ UI_TRANSLATIONS = {
         "personal_ai_news": "Actualités IA Personnelles",
         "crystal_ball": "Boule de Cristal",
         "choose_preferred_language": "Choisissez votre langue préférée pour le flux d'informations.",
-        "skip_continue_english": "Passer — Continuer en Anglais"
-    },
-    "punjabi": {
-        "verified": "ਤਸਦੀਕ ਕੀਤੀ:",
-        "global": "[ਗਲੋਬਲ]",
-        "who_affected": "👥 ਕੌਣ ਪ੍ਰਭਾਵਿਤ ਹੈ",
-        "why_matters": "⚡ ਇਹ ਕਿਉਂ ਮਹੱਤਵਪੂਰਨ ਹੈ",
-        "ai_analysis": "AI ਵਿਸ਼ਲੇਸ਼ਣ",
-        "just_now": "ਹੁਣੇ",
-        "brief_title": "⭐ 60-ਸਕਿੰਟ ਦਾ ਸਾਰ",
-        "see_more": "ਹੋਰ ਦੇਖੋ",
-        "top_headlines": "ਮੁੱਖ ਖ਼ਬਰਾਂ",
-        "breaking_news": "ਬ੍ਰੇਕਿੰਗ ਨਿਊਜ਼",
-        "live_updates": "ਲਾਈਵ ਅੱਪਡੇਟ",
-        "universal_news": "ਯੂਨੀਵਰਸਲ ਨਿਊਜ਼",
-        "update_cycle": "⚡ 15-ਮਿੰਟ ਦਾ ਅੱਪਡੇਟ",
-        "see_more_briefs": "ਹੋਰ ਸਾਰ ਦੇਖੋ",
-        "status": "ਸਥਿਤੀ:",
-        "syncing": "ਸਿੰਕ ਹੋ ਰਿਹਾ ਹੈ...",
-        "for_students": "ਵਿਦਿਆਰਥੀਆਂ ਲਈ",
-        "personal_ai_news": "ਨਿੱਜੀ AI ਖ਼ਬਰਾਂ"
-    },
-    "marathi": {
-        "verified": "सत्यापित:",
-        "global": "[जागतिक]",
-        "who_affected": "👥 कोणावर परिणाम होतो",
-        "why_matters": "⚡ हे का महत्त्वाचे आहे",
-        "ai_analysis": "AI विश्लेषण",
-        "just_now": "आत्ता",
-        "brief_title": "⭐ ६०-सेकंद सारांश",
-        "see_more": "आणखी पहा",
-        "top_headlines": "प्रमुख बातम्या",
-        "breaking_news": "ब्रेकिंग न्यूज",
-        "live_updates": "लाईव्ह अपडेट्स",
-        "universal_news": "युनिव्हर्सल न्यूज",
-        "for_students": "विद्यार्थ्यांसाठी",
-        "save_for_later": "🔖 नंतरसाठी जतन करा"
-    },
-    "bengali": {
-        "verified": "যাচাইকৃত:",
-        "global": "[বৈশ্বিক]",
-        "who_affected": "👥 কারা প্রভাবিত",
-        "why_matters": "⚡ কেন এটি গুরুত্বপূর্ণ",
-        "ai_analysis": "AI বিশ্লেষণ",
-        "just_now": "এইমাত্র",
-        "brief_title": "⭐ ৬০-সেকেন্ডের সংক্ষিপ্তসার",
-        "see_more": "আরও দেখুন",
-        "top_headlines": "শীর্ষ সংবাদ",
-        "breaking_news": "ব্রেকিং নিউজ",
-        "live_updates": "লাইভ আপডেট",
-        "universal_news": "ইউনিভার্সাল নিউজ"
-    },
-    "tamil": {
-        "verified": "சரிபார்க்கப்பட்டது:",
-        "global": "[உலகளாவிய]",
-        "who_affected": "👥 யார் பாதிக்கப்படுகிறார்கள்",
-        "why_matters": "⚡ இது ஏன் முக்கியமானது",
-        "ai_analysis": "AI பகுப்பாய்வு",
-        "just_now": "இப்போது",
-        "brief_title": "⭐ 60-வினாடி சுருக்கம்",
-        "top_headlines": "தலைப்புச் செய்திகள்",
-        "breaking_news": "முக்கிய செய்திகள்",
-        "live_updates": "நேரடி அறிவிப்புகள்"
-    },
-    "kannada": {
-        "verified": "ಪರಿಶೀಲಿಸಲಾಗಿದೆ:",
-        "global": "[ಜಾಗತಿಕ]",
-        "who_affected": "👥 ಯಾರು ಬಾಧಿತರಾಗಿದ್ದಾರೆ",
-        "why_matters": "⚡ ಇದು ಏಕೆ ಮುಖ್ಯ",
-        "ai_analysis": "AI ವಿಶ್ਲੇಷಣೆ",
-        "just_now": "ಈಗಷ್ಟೇ",
-        "brief_title": "⭐ 60-ಸೆಕೆಂಡ್ ಸಾರಾಂಶ",
-        "top_headlines": "ಮುಖ್ಯಾಂಶಗಳು",
-        "breaking_news": "ಬ್ರೇಕਿੰਗ ನ್ಯೂಸ್",
-        "live_updates": "ಲೈವ್ ನವೀಕರಣಗಳು"
-    },
-    "malayalam": {
-        "verified": "സ്ഥിരീകരിച്ചു:",
-        "global": "[ആഗോള]",
-        "who_affected": "👥 ആരെ ബാധിക്കുന്നു",
-        "why_matters": "⚡ എന്തുകൊണ്ട് ഇത് പ്രധാനമാണ്",
-        "ai_analysis": "AI വിശകലനം",
-        "just_now": "ഇപ്പോൾ",
-        "brief_title": "⭐ 60-സെക്കൻഡ് സംഗ്രഹം",
-        "top_headlines": "പ്രധാന വാർത്തകൾ",
-        "breaking_news": "ബ്രേക്കിംഗ് ന്യൂസ്",
-        "live_updates": "തത്സമയ അപ്‌ഡേറ്റുകൾ"
+        "skip_continue_english": "Passer — Continuer en Anglais",
+        "student_section": {
+            "title": "Intelligence Étudiante",
+            "subtitle": "Bourses, examens, admissions et mises à jour de carrière",
+            "all_updates": "Toutes les mises à jour",
+            "scholarships": "Bourses & Stages",
+            "exams": "Examens & Résultats",
+            "admissions": "Admissions & Cours",
+            "career": "Carrière & Emplois",
+            "policy": "Éducation & Politique"
+        }
     }
 }
 
-# Add default fallbacks for languages that are identified but not fully localized yet
-for lang in ["tamil", "kannada", "malayalam", "gujarati"]:
-    if lang not in UI_TRANSLATIONS:
-        UI_TRANSLATIONS[lang] = UI_TRANSLATIONS["english"]
-
 def get_ui_labels(lang: str) -> dict:
     """Helper to fetch localized UI labels for backend-driven article objects."""
-    l = lang.lower()
+    l = lang.lower().strip()
+    
+    # Map short codes if needed
+    mapping = {
+        "hi": "hindi", "te": "telugu", "ta": "tamil", "ka": "kannada", 
+        "ml": "malayalam", "mr": "marathi", "bn": "bengali", "gu": "gujarati",
+        "pa": "punjabi"
+    }
+    l = mapping.get(l, l)
+
     if l == 'telugu':
         return {
             "key_points": "ముఖ్య అంశాలు",
@@ -828,6 +969,12 @@ def get_ui_labels(lang: str) -> dict:
             "why_it_matters": "हे महत्त्वाचे का आहे",
             "who_affected": "कोणावर परिणाम झाला"
         }
+    elif l == 'punjabi':
+        return {
+            "key_points": "ਮੁੱਖ ਨੁਕਤੇ",
+            "why_it_matters": "ਇਹ ਕਿਉਂ ਮਹੱਤਵਪੂਰਨ ਹੈ",
+            "who_affected": "ਕੌਣ ਪ੍ਰਭਾਵਿਤ ਹੈ"
+        }
     # Add more as needed
     return {
         "key_points": "Key Points",
@@ -844,9 +991,9 @@ def get_ui_translations(lang: str) -> dict:
     mapping = {
         "en": "english", "hi": "hindi", "te": "telugu", "ta": "tamil",
         "ka": "kannada", "ml": "malayalam", "mr": "marathi", "bn": "bengali",
-        "gu": "gujarati", "ar": "arabic", "fr": "french", "es": "spanish"
+        "gu": "gujarati", "ar": "arabic", "fr": "french", "es": "spanish",
+        "pa": "punjabi"
     }
     lang = mapping.get(lang, lang)
     
     return UI_TRANSLATIONS.get(lang, UI_TRANSLATIONS.get("english"))
-

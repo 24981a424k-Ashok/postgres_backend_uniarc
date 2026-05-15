@@ -64,7 +64,8 @@ LANGUAGE_TO_STATES = {
     "Malayalam": ["Kerala", "Thiruvananthapuram", "Kochi", "Kozhikode"],
     "Bengali": ["West Bengal", "Kolkata", "Howrah"],
     "Gujarati": ["Gujarat", "Ahmedabad", "Surat", "Vadodara"],
-    "Marathi": ["Maharashtra", "Mumbai", "Pune", "Nagpur"]
+    "Marathi": ["Maharashtra", "Mumbai", "Pune", "Nagpur"],
+    "Punjabi": ["Punjab", "Chandigarh", "Amritsar", "Ludhiana"]
 }
 
 router = APIRouter()
@@ -146,7 +147,7 @@ def _deep_normalize_str(val):
         return " ".join(_deep_normalize_list(val))
     return str(val)
 
-def normalize_article_data(data: dict):
+def normalize_article_data(data: dict, strip_large_fields: bool = False):
     """Apply definitive normalization to a news article dictionary."""
     if not isinstance(data, dict): return data
     
@@ -268,19 +269,19 @@ def normalize_article_data(data: dict):
     # NOTE: Do NOT prepend a hardcoded host to relative image URLs.
     # On Railway the host is different from localhost. Relative paths are served
     # by the frontend proxy. Only strip truly invalid values.
-    image_url = data.get("image_url")
-    if image_url and not str(image_url).startswith(("http", "/", "data:")):
         # It's a bare filename — make it a root-relative path
         data["image_url"] = f"/static/{image_url.lstrip('/')}"
+    
+    # 4. Strip large fields if requested to save bandwidth (Egress Optimization)
+    if strip_large_fields:
+        data.pop("content", None)
+        data.pop("analysis", None)
             
     return data
 
 STUDENT_NEWS_CATEGORIES = [
-    "Scholarships & Internships", "Exams & Results", "Policy & Research", 
-    "Admissions & Courses", "Campus Life", "Career & Jobs", "Education",
-    "Student Opportunities", "Academic Research", "Science & Health", "Tech", "Sports",
-    "Entertainment", "World News", "Business & Economy", "Lifestyle & Wellness",
-    "Technology", "Science", "Business", "Startup", "International", "National"
+    "Scholarships & Internships", "Exams & Results", "Admissions & Courses", 
+    "Career & Jobs", "Education & Policy", "All Updates"
 ]
 STUDENT_KEYWORDS = [
     "student", "exam", "school", "university", "college", "scholarship", "syllabus", 
@@ -307,17 +308,17 @@ def is_student_article_logic(article):
     
     combined = f"{title} {content} {why} {cat_val}"
     
-    # 1. Category check (More robust)
+    # 1. Category check (Direct match or sub-string)
     is_student_cat = any(sc.lower() in cat_val for sc in STUDENT_NEWS_CATEGORIES)
     
-    # 2. Keyword check
+    # 2. Keyword check (Ensure we don't miss articles that are relevant but not yet categorized)
     has_keywords = any(kw.lower() in combined for kw in STUDENT_KEYWORDS)
     
     # 3. Global priority check
     is_global = getattr(article, 'country', '') == "Global"
     
     # 4. Impact check - if it's Global and highly impactful, students should see it as "General Awareness"
-    is_high_impact_global = is_global and (getattr(article, 'impact_score', 0) or 0) >= 7
+    is_high_impact_global = is_global and (getattr(article, 'impact_score', 0) or 0) >= 8
     
     # Specific exclusion for pure market/stock news not impacting education
     if ("stock price" in combined or "market capitalization" in combined) and not is_student_cat:
@@ -435,11 +436,18 @@ async def api_bootstrap(
 ):
     """
     JSON bootstrap endpoint for the decoupled frontend.
-    Returns the exact same data context that the Jinja2 uses,
-    but as a clean JSON response instead of rendered HTML.
-    Includes aggressive server-side caching (10m TTL) for performance.
     """
     global _bootstrap_cache
+    
+    # 0. NORMALIZE LANGUAGE CODE
+    if lang:
+        lang = lang.lower().strip()
+        mapping = {
+            "hi": "hindi", "te": "telugu", "ta": "tamil", "ka": "kannada",
+            "ml": "malayalam", "mr": "marathi", "bn": "bengali", "gu": "gujarati",
+            "pa": "punjabi"
+        }
+        lang = mapping.get(lang, lang)
     
     # 1. Check Cache (10-minute TTL)
     cache_key = f"{category}_{country}_{lang}"
@@ -595,7 +603,7 @@ async def api_bootstrap(
         for sec in ["top_stories", "breaking_news", "trending_news", "brief"]:
             if sec in digest_data:
                 for s in digest_data[sec]:
-                    normalize_article_data(s)
+                    normalize_article_data(s, strip_large_fields=True)
                     s["ui_key_points"] = ui.get("key_points", "Key Points")
                     s["ui_why_it_matters"] = ui.get("why_it_matters", "Why It Matters")
                     s["ui_who_affected"] = ui.get("who_affected", "Who is Affected")
@@ -762,11 +770,20 @@ async def api_bootstrap(
         if effective_lang and effective_lang.lower() != 'english' and digest_data:
             import asyncio
             try:
-                # Deadline for translation: 60s
+                # 1. Translate Main Dashboard Stories
                 await asyncio.wait_for(
                     translator.translate_node_bulk(digest_data, effective_lang),
                     timeout=60.0
                 )
+                
+                # 2. ON-DEMAND TRANSLATION FOR BREAKING NEWS
+                if digest_data.get("breaking_news"):
+                    logger.info(f"Triggering on-demand translation for breaking news ({effective_lang})...")
+                    # Use translate_stories which is more direct for lists
+                    digest_data["breaking_news"] = await translator.translate_stories(
+                        digest_data["breaking_news"][:10], # Top 10 for speed
+                        effective_lang
+                    )
             except Exception as e:
                 logger.error(f"Global API Bootstrap translation failed: {e}")
 
@@ -960,7 +977,7 @@ async def get_breaking_news(country: str = None, db: Session = Depends(get_db)):
             if not item.get("image_url"):
                 seed = f"{item.get('headline', '')}{item.get('title', '')}"
                 item["image_url"] = get_fallback_image(seed)
-            normalize_article_data(item)
+            normalize_article_data(item, strip_large_fields=True)
     
     return {"breaking_news": breaking_news}
 
@@ -1117,9 +1134,9 @@ async def get_more_stories(category: str, offset: int, country: str = None, lang
         except Exception as e:
             logger.warning(f"more-stories translation failed: {e}")
     
-    # ---- NORMALIZE ALL STORIES BEFORE RETURNING ----
+    # ---- NORMALIZE ALL STORIES BEFORE RETURNING (STRIP CONTENT FOR BANDWIDTH) ----
     for s in subset:
-        normalize_article_data(s)
+        normalize_article_data(s, strip_large_fields=True)
     
     return {
         "stories": subset,
@@ -1935,7 +1952,7 @@ async def get_user_personalized_news(
         
     return {
         "status": "success", 
-        "stories": [normalize_article_data(s.to_dict() if hasattr(s, "to_dict") else s) for s in stories],
+        "stories": [normalize_article_data(s.to_dict() if hasattr(s, "to_dict") else s, strip_large_fields=True) for s in stories],
         "interests": interests
     }
 
@@ -1969,6 +1986,10 @@ async def api_get_student_news(category: str = 'All Updates', country: str = 'Gl
                 page_articles = trans_res.get("translated_stories", page_articles)
             except Exception as e:
                 logger.error(f"Student news translation failed: {e}")
+
+        # Normalization (Bandwidth Optimization)
+        for a in page_articles:
+            normalize_article_data(a, strip_large_fields=True)
 
         return {
             "status": "success",

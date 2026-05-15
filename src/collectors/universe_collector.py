@@ -7,7 +7,6 @@ import json
 from datetime import datetime, timedelta
 from dateutil import parser
 from typing import List, Dict, Any
-import openai
 from src.config import settings
 from src.config.settings import OPENAI_API_KEY
 from src.database.models import SessionLocal, VerifiedNews
@@ -60,7 +59,6 @@ class UniverseCollector:
         Fetch news from the 10 sources and categorize/analyze for the full dashboard experience.
         """
         all_articles = []
-        logger.info(f"LIVE_DEBUG: Starting universe scan for: {country}")
         
         # 1. Prepare sources
         dynamic_sources = self.sources.copy()

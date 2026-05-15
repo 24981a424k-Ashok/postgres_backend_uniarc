@@ -118,9 +118,10 @@ class ExamGenerator:
                 user_prompt=prompt
             )
             # Robust JSON cleanup
-            if "{" in response and "}" in response:
-                response = response[response.find("{"):response.rfind("}")+1]
-            return json.loads(response)
+            content = response.strip()
+            if "{" in content and "}" in content:
+                content = content[content.find("{"):content.rfind("}")+1]
+            return json.loads(content)
         except Exception as e:
             logging.error(f"Exam Generation Error: {e}")
             

@@ -39,7 +39,8 @@ class NewsTranslator:
             "Bengali": "ben_Beng", "Gujarati": "guj_Gujr", "Arabic": "arb_Arab",
             "Japanese": "jpn_Jpan", "Spanish": "spa_Latn", "French": "fra_Latn",
             "German": "deu_Latn", "Russian": "rus_Cyrl", "Chinese": "zho_Hans",
-            "Korean": "kor_Hang", "Portuguese": "por_Latn", "Turkish": "tur_Latn"
+            "Korean": "kor_Hang", "Portuguese": "por_Latn", "Turkish": "tur_Latn",
+            "Punjabi": "pan_Guru"
         }
         
         if not self.all_keys:
@@ -120,17 +121,20 @@ class NewsTranslator:
         logger.info(f"Verification complete: {len(results['active'])} active, {len(results['dead'])} dead, {len(results['limited'])} limited.")
         return results
 
-    async def translate_nllb(self, text: str, target_lang: str) -> str:
+    async def translate_nllb(self, text: str, target_lang: str, attempts: int = 3) -> str:
         """
         Layer 3: Emergency Fallback using NLLB via Hugging Face.
         Zero cost, infinite availability (within rate limits).
+        Enhanced with robust retry logic and error handling.
         """
+        if not text or not target_lang:
+            return text
+            
         if not settings.HUGGINGFACE_API_KEY:
             return text
             
-        nllb_code = self.nllb_map.get(target_lang)
+        nllb_code = self.nllb_map.get(target_lang.capitalize()) or self.nllb_map.get(target_lang)
         if not nllb_code:
-            # Fallback to English if language not supported by NLLB
             return text
 
         headers = {"Authorization": f"Bearer {settings.HUGGINGFACE_API_KEY}"}
@@ -139,20 +143,37 @@ class NewsTranslator:
             "parameters": {"src_lang": "eng_Latn", "tgt_lang": nllb_code}
         }
 
-        try:
-            async with httpx.AsyncClient(timeout=30) as client:
-                response = await client.post(HF_NLLB_URL, headers=headers, json=payload)
-                if response.status_code == 200:
-                    result = response.json()
-                    if isinstance(result, list) and len(result) > 0:
-                        return result[0].get("translation_text", text)
-                elif response.status_code == 503: # Model loading
+        for i in range(attempts):
+            try:
+                async with httpx.AsyncClient(timeout=45) as client:
+                    response = await client.post(HF_NLLB_URL, headers=headers, json=payload)
+                    
+                    if response.status_code == 200:
+                        result = response.json()
+                        if isinstance(result, list) and len(result) > 0:
+                            return result[0].get("translation_text", text)
+                        return text
+                    
+                    if response.status_code == 503: # Model loading
+                        wait_time = (i + 1) * 3
+                        logger.info(f"NLLB model loading (503). Waiting {wait_time}s before retry {i+1}/{attempts}...")
+                        await asyncio.sleep(wait_time)
+                        continue
+                        
+                    if response.status_code == 429: # Rate limit
+                        wait_time = (i + 1) * 5
+                        logger.warning(f"NLLB rate limited (429). Waiting {wait_time}s before retry {i+1}/{attempts}...")
+                        await asyncio.sleep(wait_time)
+                        continue
+                        
+                    logger.warning(f"NLLB failed with status {response.status_code}: {response.text}")
+                    break # Don't retry for other errors (e.g. 400, 401)
+                    
+            except Exception as e:
+                logger.error(f"NLLB attempt {i+1} failed with error: {e}")
+                if i < attempts - 1:
                     await asyncio.sleep(2)
-                    return await self.translate_nllb(text, target_lang)
-                
-                logger.warning(f"NLLB failed with status {response.status_code}: {response.text}")
-        except Exception as e:
-            logger.error(f"NLLB error: {e}")
+                continue
         
         return text
 

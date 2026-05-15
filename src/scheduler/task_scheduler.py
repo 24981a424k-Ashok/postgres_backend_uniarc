@@ -396,6 +396,15 @@ def start_scheduler():
         loop.run_until_complete(run_twitter_only_cycle())
         loop.close()
 
+    def _run_data_retention():
+        try:
+            from src.utils.data_retention import prune_old_data
+            logger.info("--- 🧹 DATA RETENTION START: Cleaning old articles (>10 days) ---")
+            prune_old_data(days=10)
+            logger.info("--- ✅ DATA RETENTION SUCCESSFUL ---")
+        except Exception as e:
+            logger.error(f"Data retention failed: {e}")
+
     # FULL NEWS CYCLE (Every 3 minutes for high-speed updates)
     scheduler.add_job(
         _run_async_cycle, 
@@ -417,6 +426,17 @@ def start_scheduler():
         timezone='Asia/Kolkata',
         id='daily_newspaper_update',
         max_instances=3,
+        misfire_grace_time=3600,
+        coalesce=True
+    )
+
+    # DATA RETENTION (Every 24 hours at 3 AM)
+    scheduler.add_job(
+        _run_data_retention,
+        'cron',
+        hour=3,
+        minute=0,
+        id='data_retention_job',
         misfire_grace_time=3600,
         coalesce=True
     )

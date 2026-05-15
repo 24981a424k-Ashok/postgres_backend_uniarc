@@ -79,10 +79,11 @@ class DigestGenerator:
                         "country": n.country
                     })
                 
-                # breaking_results = await breaking_analyzer.analyze_breaking_batch(articles_to_analyze)
+                breaking_results = await breaking_analyzer.analyze_breaking_batch(articles_to_analyze)
                 
-                # DIRECT FALLBACK (Bypass LLM for volume)
-                breaking_results = []
+                # FALLBACK (Bypass LLM for volume)
+                if not breaking_results:
+                    breaking_results = []
                 breaking_seen_titles = set()  # FIXED: was 'seen_titles' which shadowed outer dedup set
                 
                 for a in articles_to_analyze:
@@ -313,10 +314,6 @@ class DigestGenerator:
             if name not in countries:
                 countries[name] = []
             countries[name].append(item_data)
-            
-            # CRITICAL DEBUG
-            if name in ['China', 'UAE']:
-                logger.info(f"APPEND SUCCESS: {name} now has {len(countries[name])} stories. Added: {item_data['title'][:30]}")
 
         # 2.B Populate Categories (Increased pool for better fill)
         for n in sorted_news[:600]:
@@ -542,9 +539,8 @@ class DigestGenerator:
         
         digest_data["brief"] = brief_items
 
-        # FINAL DEBUG
+        # FINAL STATE
         f_countries = digest_data.get("countries", {})
-        logger.info(f"FINAL DIGEST STATE: China={len(f_countries.get('China', []))}, UAE={len(f_countries.get('UAE', []))}")
 
         # UPSERT: Update today's digest instead of always creating a new one
         # This prevents 96 new rows/day accumulation

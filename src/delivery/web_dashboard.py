@@ -678,7 +678,7 @@ async def api_bootstrap(
 
         # Country Node Localization
         elif country and digest_data:
-            target_name, match_keys, target_lang = normalize_country(country)
+            target_name, match_keys, target_lang, _ = normalize_country(country)
             
             # India Node Special Handling: Default to English as per user request
             if target_name.lower() == "india":
@@ -968,7 +968,7 @@ async def get_breaking_news(country: str = None, db: Session = Depends(get_db)):
         
         # 1. Standardized Filter
         if country:
-            target_name, match_keys, _ = normalize_country(country)
+            target_name, match_keys, _, _ = normalize_country(country)
             breaking_news = [
                 b for b in breaking_news 
                 if (b.get("country") in match_keys) or (b.get("country_name") in match_keys)
@@ -1117,7 +1117,7 @@ async def get_more_stories(category: str, offset: int, country: str = None, lang
              
         # FINALLY: If country is provided, filter the results strictly to match
         if country and stories:
-            target_name, match_keys, _ = normalize_country(country)
+            target_name, match_keys, _, _ = normalize_country(country)
             stories = [
                 s for s in stories
                 if (s.get("country") in match_keys) or (s.get("country_name") in match_keys)
@@ -1969,7 +1969,7 @@ async def api_get_student_news(category: str = 'All Updates', country: str = 'Gl
     try:
         # --- CACHE MANAGEMENT ---
         await _update_student_cache_if_needed(db, force=False, country=country)
-        target_name, _, _ = normalize_country(country)
+        target_name, _, _, _ = normalize_country(country)
         country_key = target_name.lower()
         
         articles = _student_news_caches.get(country_key, {}).get("articles", [])
@@ -1987,9 +1987,9 @@ async def api_get_student_news(category: str = 'All Updates', country: str = 'Gl
         # Translation Injection (Perfection Restoration)
         if lang and lang.lower() != 'english' and page_articles:
             try:
-                # Use unified translator wrapper
-                trans_res = await _do_translate(page_articles, lang, "")
-                page_articles = trans_res.get("translated_stories", page_articles)
+                # Normalize lang: e.g. "Telugu" -> "telugu"
+                normalized_lang = lang.strip().lower()
+                page_articles = await translator.translate_stories(page_articles, normalized_lang)
             except Exception as e:
                 logger.error(f"Student news translation failed: {e}")
 
@@ -2014,7 +2014,7 @@ async def api_get_student_news(category: str = 'All Updates', country: str = 'Gl
 async def api_get_student_trends(country: str = "India", db: Session = Depends(get_db)):
     """Async trends for student portal."""
     await _update_student_cache_if_needed(db, force=False, country=country)
-    target_name, _, _ = normalize_country(country)
+    target_name, _, _, _ = normalize_country(country)
     country_key = target_name.lower()
     return {"status": "success", "trends": _student_news_caches.get(country_key, {}).get("trends", {})}
 

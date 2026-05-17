@@ -317,17 +317,11 @@ def is_student_article_logic(article):
     # 2. Keyword check (Ensure we don't miss articles that are relevant but not yet categorized)
     has_keywords = any(kw.lower() in combined for kw in STUDENT_KEYWORDS)
     
-    # 3. Global priority check
-    is_global = getattr(article, 'country', '') == "Global"
-    
-    # 4. Impact check - if it's Global and highly impactful, students should see it as "General Awareness"
-    is_high_impact_global = is_global and (getattr(article, 'impact_score', 0) or 0) >= 8
-    
     # Specific exclusion for pure market/stock news not impacting education
     if ("stock price" in combined or "market capitalization" in combined) and not is_student_cat:
         return False
             
-    return is_student_cat or has_keywords or is_high_impact_global
+    return is_student_cat or has_keywords
 
 def log_protocol_action(db: Session, action: str, target_type: str, target_id: str = None, admin_user: str = "Admin", details: str = None):
     """Helper to record administrative actions for protocol history."""
@@ -2097,6 +2091,20 @@ async def _fetch_newsdata_student_articles(db: Session, country_code: str):
             d['id'] = news.id
             d['image_url'] = news.image_url or get_fallback_image(news.title, "Education")
             d['urgency'] = "Medium"
+            
+            # Category Mapping
+            combined_text = f"{news.title} {news.content} {news.why_it_matters} {news.category}".lower()
+            if any(k in combined_text for k in ["scholarship", "internship", "fellowship", "stipend"]):
+                d['category'] = "Scholarships & Internships"
+            elif any(k in combined_text for k in ["jee", "neet", "cuet", "upsc", "ssc", "board exam", "exam result", "admit card"]):
+                d['category'] = "Exams & Results"
+            elif any(k in combined_text for k in ["admission", "course", "study abroad", "university", "college", "bachelors", "masters"]):
+                d['category'] = "Admissions & Courses"
+            elif any(k in combined_text for k in ["job", "recruitment", "fresher", "placement", "hiring", "career", "salary"]):
+                d['category'] = "Career & Jobs"
+            else:
+                d['category'] = "All Updates"
+                
             results.append(d)
             
         logger.info(f"Student Section: Total {len(results)} articles (including {len(internal_news)} from DB)")
@@ -2162,8 +2170,18 @@ async def _update_student_cache_if_needed(db: Session, force: bool = False, coun
         if art_url in seen_urls: continue
         seen_urls.add(art_url)
         
-        is_student_cat = any(sc.lower() in (art.category or "").lower() for sc in STUDENT_NEWS_CATEGORIES)
-        cat = art.category if is_student_cat else "All Updates"
+        # Map into exact categories requested by the user
+        combined_text = f"{art.title} {art.content} {art.why_it_matters} {art.category}".lower()
+        if any(k in combined_text for k in ["scholarship", "internship", "fellowship", "stipend"]):
+            cat = "Scholarships & Internships"
+        elif any(k in combined_text for k in ["jee", "neet", "cuet", "upsc", "ssc", "board exam", "exam result", "admit card"]):
+            cat = "Exams & Results"
+        elif any(k in combined_text for k in ["admission", "course", "study abroad", "university", "college", "bachelors", "masters"]):
+            cat = "Admissions & Courses"
+        elif any(k in combined_text for k in ["job", "recruitment", "fresher", "placement", "hiring", "career", "salary"]):
+            cat = "Career & Jobs"
+        else:
+            cat = "All Updates"
         
         # Use existing normalization for consistency
         normalized = normalize_article_data(art.to_dict())
